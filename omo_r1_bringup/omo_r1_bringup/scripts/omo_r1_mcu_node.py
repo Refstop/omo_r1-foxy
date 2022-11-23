@@ -213,8 +213,8 @@ class OMOR1MiniNode(Node):
     timestamp_now = self.get_clock().now().to_msg()
     # Set odometry data
     odom = Odometry()
-    odom.header.frame_id = "odom"
-    odom.child_frame_id = "base_footprint"
+    odom.header.frame_id = "omo/odom"
+    odom.child_frame_id = "omo/base_footprint"
     odom.header.stamp = timestamp_now
     odom.pose.pose.position.x = self.odom_pose.x
     odom.pose.pose.position.y = self.odom_pose.y

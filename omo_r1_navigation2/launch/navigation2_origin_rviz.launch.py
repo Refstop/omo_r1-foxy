@@ -30,16 +30,11 @@ from launch_ros.actions import Node
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     omo_r1_navigation2_dir = get_package_share_directory('omo_r1_navigation2')
-
-    declare_map_yaml_cmd = DeclareLaunchArgument(
-        'map',
-        default_value=os.path.join(omo_r1_navigation2_dir, 'map', 'sparo_map.yaml'),
-        description='Full path to map yaml file to load')
     
     rviz_config_dir = os.path.join(
         get_package_share_directory('omo_r1_navigation2'),
         'rviz',
-        'robot.rviz')
+        'robot_origin.rviz')
 
     return LaunchDescription([
         DeclareLaunchArgument(

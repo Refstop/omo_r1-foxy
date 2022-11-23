@@ -34,9 +34,10 @@ def generate_launch_description():
         default=os.path.join(
             get_package_share_directory('omo_r1_navigation2'),
             'map',
-            'map_name.yaml'))
+            'sparo_map.yaml'))
+    # param_file_name = 'omo_r1_test.yaml'
 
-    param_file_name = 'sparo_omo_r1.yaml'
+    param_file_name = 'omo_r1.yaml'
     param_dir = LaunchConfiguration(
         'params_file',
         default=os.path.join(
@@ -56,7 +57,7 @@ def generate_launch_description():
             'params_file',
             default_value=param_dir,
             description='Full path to param file to load'),
-
+            
         DeclareLaunchArgument(
             'use_sim_time',
             default_value='false',
@@ -67,6 +68,8 @@ def generate_launch_description():
             launch_arguments={
                 'map': map_dir,
                 'use_sim_time': use_sim_time,
-                'params_file': param_dir}.items(),
+                'params_file': param_dir,
+                'namespace': 'omo',
+                'use_namespace': 'true'}.items(),
         )
     ])

@@ -22,7 +22,7 @@ def generate_launch_description():
       'param/omo_r1_mcu.yaml'
     )
   )
-
+  
   sllidar_ros2_dir = LaunchConfiguration(
     'sllidar_ros2_dir',
     default=os.path.join(
@@ -31,13 +31,13 @@ def generate_launch_description():
     )
   )
 
-  usb_cam_dir = LaunchConfiguration(
-    'usb_cam_dir',
-    default=os.path.join(
-      get_package_share_directory('usb_cam'),
-      'launch'
-    )
-  )
+  # usb_cam_dir = LaunchConfiguration(
+  #   'usb_cam_dir',
+  #   default=os.path.join(
+  #     get_package_share_directory('usb_cam'),
+  #     'launch'
+  #   )
+  # )
 
   use_sim_time = LaunchConfiguration('use_sim_time', default='false')
 
@@ -48,6 +48,7 @@ def generate_launch_description():
       'launch'
     )
   )
+  omo_namespace = "omo"
 
   return LaunchDescription([
     DeclareLaunchArgument(
@@ -57,19 +58,20 @@ def generate_launch_description():
 
     IncludeLaunchDescription(
       PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/omo_r1_mcu.launch.py']),
-      launch_arguments={'omo_r1_mcu_parameter': omo_r1_mcu_parameter}.items()
+      launch_arguments={'omo_r1_mcu_parameter': omo_r1_mcu_parameter, 'namespace': omo_namespace}.items()
     ),
     
     IncludeLaunchDescription(
-      PythonLaunchDescriptionSource([sllidar_ros2_dir, '/sllidar_s2_launch.py'])
+      PythonLaunchDescriptionSource([sllidar_ros2_dir, '/sllidar_s2_launch.py']),
+      launch_arguments={'namespace': omo_namespace}.items()
     ),
     
     IncludeLaunchDescription(
       PythonLaunchDescriptionSource([omo_r1_description_dir, '/omo_r1_state_publisher.launch.py']),
-      launch_arguments={'use_sim_time': use_sim_time}.items(),
-    ),
+      launch_arguments={'use_sim_time': use_sim_time, 'namespace': omo_namespace}.items(),
+    )
 
-    IncludeLaunchDescription(
-      PythonLaunchDescriptionSource([usb_cam_dir, '/demo_launch.py'])
-    ),
+    # IncludeLaunchDescription(
+    #   PythonLaunchDescriptionSource([usb_cam_dir, '/demo_launch.py'])
+    # ),
   ])

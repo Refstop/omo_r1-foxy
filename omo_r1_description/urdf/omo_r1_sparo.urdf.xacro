@@ -2,15 +2,15 @@
 <robot name="omo_r1" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find omo_r1_description)/urdf/common_properties.xacro"/>
 
-  <link name="base_footprint"/>
+  <link name="omo/base_footprint"/>
 
   <joint name="base_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link" />
+    <parent link="omo/base_footprint"/>
+    <child link="omo/base_link" />
     <origin xyz="0 0.0 0.07" rpy="0 0 0.0"/>
   </joint>
 
-  <link name="base_link">
+  <link name="omo/base_link">
     <visual>
       <origin xyz="0.097 0.276 0.19" rpy="3.14 0 -1.57"/>
       <geometry>
@@ -36,13 +36,13 @@
   </link>
 
   <joint name="wheel_left_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_left_link"/>
+    <parent link="omo/base_link"/>
+    <child link="omo/wheel_left_link"/>
     <origin xyz="0.0 0.275 0.037" rpy="0.0 0.0 0"/>
     <axis xyz="0 1 0"/>
   </joint>
 
-  <link name="wheel_left_link">
+  <link name="omo/wheel_left_link">
     <visual>
       <origin xyz="-0.1105 -0.06 0.1104" rpy="-1.57 0 0"/>
       <geometry>
@@ -68,13 +68,13 @@
   </link>
 
   <joint name="wheel_right_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_right_link"/>
+    <parent link="omo/base_link"/>
+    <child link="omo/wheel_right_link"/>
     <origin xyz="0.0 -0.275 0.037" rpy="0.0 0 0"/>
     <axis xyz="0 1 0"/>
   </joint>
 
-  <link name="wheel_right_link">
+  <link name="omo/wheel_right_link">
     <visual>
       <origin xyz="-0.110 0.06 -0.1103" rpy="1.57 0 0"/>
       <geometry>
@@ -100,12 +100,12 @@
   </link>
 
   <joint name="caster_back_right_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="caster_back_right_link"/>
+    <parent link="omo/base_link"/>
+    <child link="omo/caster_back_right_link"/>
     <origin xyz="-0.33 -0.148 0.06" rpy="0 0 0"/>
   </joint>
 
-  <link name="caster_back_right_link">
+  <link name="omo/caster_back_right_link">
     <collision>
       <origin xyz="0 0.000 -0.133" rpy="0 0 0"/>
       <geometry>
@@ -123,12 +123,12 @@
   </link>
 
   <joint name="caster_back_left_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="caster_back_left_link"/>
+    <parent link="omo/base_link"/>
+    <child link="omo/caster_back_left_link"/>
     <origin xyz="-0.33 0.148 0.06" rpy="0 0 0"/>
   </joint>
 
-  <link name="caster_back_left_link">
+  <link name="omo/caster_back_left_link">
     <collision>
       <origin xyz="0 0.000 -0.133" rpy="0 0 0"/>
       <geometry>
@@ -144,22 +144,14 @@
                izz="0.000001" />
     </inertial>
   </link>
-
-  <joint name="imu_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="gx5_link"/>
-    <origin xyz="0.0 0 0.0" rpy="3.14159 0 3.14159"/>
-  </joint>
-
-  <link name="gx5_link"/>
-
+  
   <joint name="scan_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="laser"/>
-    <origin xyz="0.06 0 0.230" rpy="0.0 0 0"/>
+    <parent link="omo/base_link"/>
+    <child link="omo/laser"/>
+    <origin xyz="0.06 0 0.230" rpy="3.141592 3.141592 0.0"/>
   </joint>
 
-  <link name="laser">
+  <link name="omo/laser">
     <visual>
       <origin xyz="0 0 0.0" rpy="0.0 0 0.0"/>
       <geometry>
@@ -185,13 +177,13 @@
   </link>S
 
 
-  <joint name="camera_joint" type="fixed">
-    <origin xyz="0.06 0.0 0.50" rpy="0.0 0.0 0.0"/>
-    <parent link="base_link"/>
-    <child link="camera_link"/>
+  <!-- <joint name="camera_joint" type="fixed">
+    <origin xyz="0.06 0.1 0.50" rpy="-1.5758 0.0 -1.5758"/>
+    <parent link="omo/base_link"/>
+    <child link="omo/camera_link"/>
   </joint>
 
-  <link name="camera_link">
+  <link name="omo/camera_link">
     <visual>
       <origin xyz="0 0 0.0" rpy="1.5758 0.0 1.5758"/>
       <geometry>
@@ -206,19 +198,19 @@
         <mesh filename="package://omo_r1_description/meshes/sensors/omo_r1_camera.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
-  </link>
+  </link> -->
 
   <!--joint name="camera_rgb_joint" type="fixed">
     <origin xyz="0.03 0.0 0.0" rpy="0 0 0"/>
-    <parent link="camera_link"/>
-    <child link="camera_rgb_frame"/>
+    <parent link="omo/camera_link"/>
+    <child link="omo/camera_rgb_frame"/>
   </joint>
-  <link name="camera_rgb_frame"/>
+  <link name="omo/camera_rgb_frame"/>
 
   <joint name="camera_rgb_optical_joint" type="fixed">
     <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
-    <parent link="camera_rgb_frame"/>
-    <child link="camera_rgb_optical_frame"/>
+    <parent link="omo/camera_rgb_frame"/>
+    <child link="omo/camera_rgb_optical_frame"/>
   </joint>
-  <link name="camera_rgb_optical_frame"/-->
+  <link name="omo/camera_rgb_optical_frame"/-->
 </robot>

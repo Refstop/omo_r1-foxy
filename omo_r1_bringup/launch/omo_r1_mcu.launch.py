@@ -22,11 +22,20 @@ def generate_launch_description():
       'param/omo_r1_mcu.yaml'
     )
   )
+  namespace = LaunchConfiguration(
+    'namespace',
+    default=""
+  )
 
   return LaunchDescription([
     DeclareLaunchArgument(
       'omo_r1_mcu_parameter',
       default_value=omo_r1_mcu_parameter
+    ),
+
+    DeclareLaunchArgument(
+      'namespace',
+      default_value=""
     ),
 
     Node(
@@ -36,6 +45,6 @@ def generate_launch_description():
       output='screen',
       emulate_tty=True,
       parameters=[omo_r1_mcu_parameter],
-      namespace='',
+      namespace=namespace,
     )
   ])

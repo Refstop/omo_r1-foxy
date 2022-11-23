@@ -15,12 +15,17 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    urdf_file_name = 'omo_r1_LC_sparo.urdf.xacro'
+    urdf_file_name = 'omo_r1_sparo.urdf.xacro'
 
     urdf = os.path.join(
         get_package_share_directory('omo_r1_description'),
         'urdf',
         urdf_file_name)
+
+    namespace = LaunchConfiguration(
+        'namespace',
+        default=""
+    )
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -28,11 +33,17 @@ def generate_launch_description():
             default_value='false',
             description='Use simulation (Gazebo) clock if true'),
 
+        DeclareLaunchArgument(
+            'namespace',
+            default_value=""
+        ),
+
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
             name='robot_state_publisher',
             output='screen',
             parameters=[{'use_sim_time': use_sim_time}],
-            arguments=[urdf])
+            arguments=[urdf],
+            namespace=namespace)
     ])
