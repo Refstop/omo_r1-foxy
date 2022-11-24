@@ -10,6 +10,7 @@ from geometry_msgs.msg import Twist, Pose, Point, Vector3, Quaternion, Transform
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Imu, JointState
 from tf2_ros import TransformBroadcaster
+from std_msgs.msg import Bool
 
 from omo_r1_interfaces.srv import Battery
 from omo_r1_interfaces.srv import Color
@@ -143,6 +144,9 @@ class OMOR1MiniNode(Node):
     self.pub_OdomTF = TransformBroadcaster(self)
     self.pub_pose = self.create_publisher(Pose, 'pose', 10)
 
+    # Set mypublisher
+    self.pub_turnon = self.create_publisher(Bool, 'turnon', 1)
+
     # Set Periodic data
     self.ph.incomming_info = ['ODO', 'VW', "POSE", "GYRO"]
     self.ph.update_battery_state()
@@ -158,8 +162,11 @@ class OMOR1MiniNode(Node):
     # Set timer proc
     self.timerProc = self.create_timer(0.01, self.update_robot)
 
-    # def __del__(self):
-    #   self.destroy_timer(self.timerProc)
+  def __del__(self):
+    # self.destroy_timer(self.timerProc)
+    msg = Bool()
+    msg.data = False
+    self.pub_turnon.publish(msg)
 
     
 
@@ -277,6 +284,9 @@ class OMOR1MiniNode(Node):
     self.pub_JointStates.publish(joint_states)
 
   def update_robot(self):
+    msg = Bool()
+    msg.data = True
+    self.pub_turnon.publish(msg)
     #raw_data = self.ph.parser()
     self.ph.read_packet()
 
@@ -287,6 +297,8 @@ class OMOR1MiniNode(Node):
     trans_vel, orient_vel = self.update_odometry(enc_l, enc_r)
     # self.updateJointStates(odo_l, odo_r, trans_vel, orient_vel)
     # self.updatePoseStates(roll_imu, pitch_imu, yaw_imu)
+
+    
 
   def cbCmdVelMsg(self, cmd_vel_msg):
     lin_vel_x = cmd_vel_msg.linear.x

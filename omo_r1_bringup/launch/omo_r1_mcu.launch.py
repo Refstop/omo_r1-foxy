@@ -45,6 +45,6 @@ def generate_launch_description():
       output='screen',
       emulate_tty=True,
       parameters=[omo_r1_mcu_parameter],
-      namespace=namespace,
+      namespace=namespace
     )
   ])

@@ -44,7 +44,7 @@ def generate_launch_description():
             get_package_share_directory('omo_r1_navigation2'),
             'param',
             param_file_name))
-
+    print('param dir!!!!!: ' ,param_dir)
     nav2_launch_file_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
 
     return LaunchDescription([
