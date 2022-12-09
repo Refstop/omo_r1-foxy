@@ -47,11 +47,13 @@ def generate_launch_description():
     stdout_linebuf_envvar = SetEnvironmentVariable(
         'RCUTILS_LOGGING_BUFFERED_STREAM', '1')
 
+    #######################################################
     declare_namespace_cmd = DeclareLaunchArgument(
         'namespace',
         default_value='omo',
         description='Top-level namespace')
 
+    ########################################################
     declare_use_namespace_cmd = DeclareLaunchArgument(
         'use_namespace',
         default_value='true',
@@ -59,7 +61,7 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(get_package_share_directory('omo_r1_navigation2'), 'map', 'sparo_map.yaml'),
+        default_value=os.path.join(get_package_share_directory('omo_r1_navigation2'), 'map', 'hitech6.yaml'),
         description='Full path to map yaml file to load')
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
@@ -67,6 +69,7 @@ def generate_launch_description():
         default_value='false',
         description='Use simulation (Gazebo) clock if true')
 
+    ######################################################
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(get_package_share_directory('omo_r1_navigation2'), 'param', 'omo_r1.yaml'),
@@ -92,6 +95,7 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(loc_launch_file_dir,
                                                        'loc_test.launch.py')),
+                                                    #    'loc_test_withoutmap.launch.py')),
             launch_arguments={'namespace': namespace,
                               'map': map_yaml_file,
                               'use_sim_time': use_sim_time,
